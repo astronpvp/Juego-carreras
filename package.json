@@ -5,11 +5,11 @@
   "scripts": {
     "dev": "node server.js",
     "build": "next build",
-    "start": "next start",
-    "lint": "eslint",
-    "start": "NODE_ENV=production node server.js"
+    "start": "cross-env NODE_ENV=production node server.js",
+    "lint": "eslint"
   },
   "dependencies": {
+    "cross-env": "^10.1.0",
     "next": "latest",
     "react": "latest",
     "react-dom": "latest",
