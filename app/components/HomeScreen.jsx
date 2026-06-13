@@ -58,69 +58,115 @@ export default function HomeScreen({
     );
   }
 
+  const isCreateMode = mode === "create";
+
   return (
-    <main className="screen">
-      <section className="card">
-        <h1>Carrera Trivial</h1>
+    <main className="screen home-screen">
+      <section className="landing-shell">
+        <div className="hero-panel">
+          <div className="eyebrow">
+            <span className="status-dot" /> Online multiplayer
+          </div>
 
-        <p className="subtitle">
-          Crea una lobby online, comparte el código y compite respondiendo
-          preguntas.
-        </p>
+          <h1>
+            Carrera <span>Trivial</span>
+          </h1>
 
-        <div className="tabs">
-          <button
-            className={mode === "create" ? "active" : ""}
-            onClick={() => setMode("create")}
-          >
-            Crear lobby
-          </button>
+          <p className="subtitle hero-copy">
+            Crea una sala privada, reta a tus amigos y gana posiciones
+            respondiendo preguntas antes de que el resto llegue a meta.
+          </p>
 
-          <button
-            className={mode === "join" ? "active" : ""}
-            onClick={() => setMode("join")}
-          >
-            Unirse
-          </button>
+          <div className="feature-grid">
+            <article>
+              <strong>🏎️ Sprint mental</strong>
+              <span>Acierta para avanzar casillas en tiempo real.</span>
+            </article>
+            <article>
+              <strong>🔥 Rachas x3</strong>
+              <span>Cada tercera respuesta correcta impulsa tu coche.</span>
+            </article>
+            <article>
+              <strong>🏁 Hasta 4 pilotos</strong>
+              <span>Lobby con código, contraseña y estado de preparado.</span>
+            </article>
+          </div>
         </div>
 
-        <label>Nombre de jugador</label>
-        <input
-          value={playerName}
-          onChange={(e) => setPlayerName(e.target.value)}
-          placeholder="Ej: Alex"
-        />
+        <section className="card form-card">
+          <div className="card-header">
+            <span className="mini-title">Acceso a partida</span>
+            <h2>{isCreateMode ? "Crear lobby" : "Unirse a lobby"}</h2>
+            <p>
+              {isCreateMode
+                ? "Configura tu sala y comparte el código con tus amigos."
+                : "Introduce el código recibido para entrar en la carrera."}
+            </p>
+          </div>
 
-        {mode === "join" && (
-          <>
-            <label>Código de lobby</label>
+          <div className="tabs" role="tablist" aria-label="Modo de acceso">
+            <button
+              className={isCreateMode ? "active" : ""}
+              onClick={() => setMode("create")}
+              type="button"
+            >
+              Crear
+            </button>
+
+            <button
+              className={!isCreateMode ? "active" : ""}
+              onClick={() => setMode("join")}
+              type="button"
+            >
+              Unirse
+            </button>
+          </div>
+
+          <div className="field-group">
+            <label>Nombre de jugador</label>
             <input
-              value={lobbyId}
-              onChange={(e) => setLobbyId(e.target.value)}
-              placeholder="Ej: A1B2C3"
+              value={playerName}
+              onChange={(e) => setPlayerName(e.target.value)}
+              placeholder="Ej: Alex"
+              autoComplete="nickname"
             />
-          </>
-        )}
+          </div>
 
-        <label>Contraseña</label>
-        <input
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="Contraseña de la lobby"
-          type="password"
-        />
+          {!isCreateMode && (
+            <div className="field-group">
+              <label>Código de lobby</label>
+              <input
+                value={lobbyId}
+                onChange={(e) => setLobbyId(e.target.value)}
+                placeholder="Ej: A1B2C3"
+                autoCapitalize="characters"
+              />
+            </div>
+          )}
 
-        {message && <p className="error">{message}</p>}
+          <div className="field-group">
+            <label>Contraseña</label>
+            <input
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Contraseña de la lobby"
+              type="password"
+              autoComplete="current-password"
+            />
+          </div>
 
-        {mode === "create" ? (
-          <button className="primary" onClick={createLobby}>
-            Crear lobby
-          </button>
-        ) : (
-          <button className="primary" onClick={joinLobby}>
-            Unirme a lobby
-          </button>
-        )}
+          {message && <p className="error">⚠️ {message}</p>}
+
+          {isCreateMode ? (
+            <button className="primary cta" onClick={createLobby} type="button">
+              Crear lobby <span>→</span>
+            </button>
+          ) : (
+            <button className="primary cta" onClick={joinLobby} type="button">
+              Entrar en carrera <span>→</span>
+            </button>
+          )}
+        </section>
       </section>
     </main>
   );

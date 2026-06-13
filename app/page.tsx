@@ -52,7 +52,11 @@ export default function HomePage() {
   if (!socket) {
     return (
       <main className="screen">
-        <h1>Cargando...</h1>
+        <section className="card">
+          <span className="mini-title">Conectando</span>
+          <h1>Preparando carrera</h1>
+          <p className="subtitle">Estamos conectando con el servidor del juego...</p>
+        </section>
       </main>
     );
   }
